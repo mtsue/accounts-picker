@@ -1,0 +1,22 @@
+{
+    "name": "Accounts Picker",
+    "version": "0.1",
+    "description": "Accounts Pick up.",
+    "permissions": ["declarativeContent"],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "page_action": {
+        "default_title": "Accounts Picker",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://twpro.jp/*"],
+            "js": ["pickup.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "manifest_version": 2
+}
