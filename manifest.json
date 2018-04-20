@@ -2,9 +2,13 @@
     "name": "Accounts Picker",
     "version": "0.1",
     "description": "Accounts Pick up.",
-    "permissions": ["declarativeContent"],
+    "permissions": [
+        "declarativeContent"
+    ],
     "background": {
-        "scripts": ["background.js"],
+        "scripts": [
+            "background.js"
+        ],
         "persistent": false
     },
     "page_action": {
@@ -13,8 +17,12 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://twpro.jp/*"],
-            "js": ["pickup.js"],
+            "matches": [
+                "https://twpro.jp/*"
+            ],
+            "js": [
+                "pickup.js"
+            ],
             "run_at": "document_idle"
         }
     ],
