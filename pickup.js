@@ -1,4 +1,11 @@
 window.addEventListener('load', event => {
+    let c = document.createElement('p');
+    c.className = 'count';
+    c.innerHTML = 0;
+    c.style.position = 'fixed';
+    c.style.zIndex = 10;
+    document.querySelector('body').insertBefore(c, document.querySelector('body').firstChild)
+    
     let users = document.querySelectorAll('.user');
     for (let i = 0; i < users.length; i++) {
         let checkbox = document.createElement('input');
@@ -24,6 +31,19 @@ const observer = new MutationObserver(mutations => {
             })
         }
     });
+});
+
+let count = 0;
+document.addEventListener('click', event => {
+    let t = event.target;
+    if(hasClass(t, 'checkbox')){
+        if(t.checked){
+            count++
+        }else{
+            count--
+        }
+    }
+    document.querySelector('.count').innerHTML = count;
 });
 
 const target = document.querySelector('#users');
