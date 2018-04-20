@@ -1,11 +1,13 @@
-let btn = document.querySelector(".run")
-btn.addEventListener('click', event => {
-    let a = document.querySelector(".result")
-    users = document.querySelectorAll('.user');
-    for(let i = 0; i < users.length; i++){
-        if(users[i].lastChild.checked){
-            let sn = users[i].children[1].firstChild.lastChild.firstChild.lastChild.innerHTML
-            a.value += `${sn}\n`;
-        }
-    }
+document.querySelector(".run").addEventListener('click', event => {
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, {
+            command: 'show_accounts',
+        }, function (msg) {
+            let resultField = document.querySelector('.result');
+            resultField.value = '';
+            for (let i = 0; i < msg.length; i++) {
+                resultField.value += msg[i] + '\n';
+            }
+        });
+    });
 })
