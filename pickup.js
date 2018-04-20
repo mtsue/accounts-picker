@@ -3,7 +3,7 @@ window.addEventListener('load', event => {
     for (let i = 0; i < users.length; i++) {
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.className = 'checkbox-onload';
+        checkbox.className = 'checkbox';
         users[i].appendChild(checkbox)
     }
 });
