@@ -6,7 +6,7 @@ document.querySelector(".run").addEventListener('click', event => {
             let resultField = document.querySelector('.result');
             resultField.value = '';
             for (let i = 0; i < msg.length; i++) {
-                resultField.value += msg[i].trim() + '\n';
+                resultField.value += (msg[i].trim() + '\n').split('@')[1];
             }
         });
     });
