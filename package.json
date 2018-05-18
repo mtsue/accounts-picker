@@ -1,0 +1,24 @@
+{
+  "name": "accounts-picker",
+  "version": "0.2.0",
+  "description": "accounts pickup with twpro.jp",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "repository": "https://github.com/mtsue/accounts-picker.git",
+  "author": "mtsue",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.3"
+  }
+}

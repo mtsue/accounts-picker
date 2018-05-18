@@ -13,7 +13,7 @@
     },
     "page_action": {
         "default_title": "Accounts Picker",
-        "default_popup": "popup.html"
+        "default_popup": "page_action/popup.html"
     },
     "content_scripts": [
         {
@@ -21,7 +21,7 @@
                 "https://twpro.jp/*"
             ],
             "js": [
-                "pickup.js"
+                "build/bundle.js"
             ],
             "run_at": "document_idle"
         }
