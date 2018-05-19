@@ -3,27 +3,36 @@ import cheerio from 'cheerio';
 import 'babel-polyfill';
 
 window.addEventListener('load', event => {
-    let c = document.createElement('p');
-    c.className = 'count';
-    c.innerHTML = 0;
-    c.style.position = 'fixed';
-    c.style.zIndex = 10;
-    document.querySelector('body').insertBefore(c, document.querySelector('body').firstChild)
+    let counter = document.createElement('p');
+    counter.className = 'count';
+    counter.innerHTML = 0;
+    counter.style.position = 'fixed';
+    counter.style.zIndex = 10;
+    document.querySelector('body').insertBefore(counter, document.querySelector('body').firstChild)
 
     let users = document.querySelectorAll('.user');
     for (let i = 0; i < users.length; i++) {
-        (async function () {
-            let sn = getScreenName(users[i]);
-            let sc = await getStatuesCount(sn);
-            let scEle = document.createElement('div');
-            scEle.className = 'status-count';
-            scEle.innerHTML = sc;
-            users[i].appendChild(scEle);
-        })();
+        const screenName = getScreenName(users[i]);
+
+        let toUserPage = document.createElement('a');
+        toUserPage.className = 'to-user-page';
+        toUserPage.innerHTML = getUserPage(screenName);
+        toUserPage.setAttribute('target', '_blank');
+        toUserPage.setAttribute('href', getUserPage(screenName));
+        users[i].appendChild(toUserPage);
+
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'checkbox';
         users[i].appendChild(checkbox);
+
+        (async function () {
+            let sc = await getStatuesCount(screenName);
+            let scEle = document.createElement('div');
+            scEle.className = 'status-count';
+            scEle.innerHTML = sc;
+            users[i].insertBefore(scEle, checkbox);
+        })();
     }
 });
 
@@ -34,18 +43,27 @@ const observer = new MutationObserver(mutations => {
                 if (hasClass(node, 'users')) {
                     let users = node.children;
                     for (let i = 0; i < users.length; i++) {
-                        (async function () {
-                            let sn = getScreenName(users[i]);
-                            let sc = await getStatuesCount(sn);
-                            let scEle = document.createElement('div');
-                            scEle.className = 'status-count';
-                            scEle.innerHTML = sc;
-                            users[i].appendChild(scEle);
-                        })();
+                        const screenName = getScreenName(users[i]);
+
+                        let toUserPage = document.createElement('a');
+                        toUserPage.className = 'to-user-page';
+                        toUserPage.innerHTML = getUserPage(screenName);
+                        toUserPage.setAttribute('target', '_blank');
+                        toUserPage.setAttribute('href', getUserPage(screenName));
+                        users[i].appendChild(toUserPage);
+
                         let checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.className = 'checkbox';
                         users[i].appendChild(checkbox);
+
+                        (async function () {
+                            let sc = await getStatuesCount(screenName);
+                            let scEle = document.createElement('div');
+                            scEle.className = 'status-count';
+                            scEle.innerHTML = sc;
+                            users[i].insertBefore(scEle, checkbox);
+                        })();
                     }
                 }
             })
@@ -110,4 +128,8 @@ function getStatuesCount(screenName) {
                 console.log(err);
             });
     });
+}
+
+function getUserPage(screenName) {
+    return `https://twitter.com/${screenName}`;
 }
