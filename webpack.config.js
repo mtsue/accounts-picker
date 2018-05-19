@@ -12,7 +12,12 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel-loader',
             options: {
-                presets: ['env']
+                presets: [['env', {
+                    target: {
+                        browsers: ['last 2 Chrome verisons'],
+                    }
+                }]],
+                plugins: ['transform-regenerator']
             }
         }]
     }
