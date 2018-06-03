@@ -3,23 +3,17 @@ import cheerio from 'cheerio';
 import 'babel-polyfill';
 
 window.addEventListener('load', event => {
-    let counter = document.createElement('p');
-    counter.className = 'count';
-    counter.innerHTML = 0;
-    counter.style.position = 'fixed';
-    counter.style.zIndex = 10;
-    document.querySelector('body').insertBefore(counter, document.querySelector('body').firstChild)
+    createCounter();
 
     let users = document.querySelectorAll('.user');
     for (let i = 0; i < users.length; i++) {
+        if(users[i].querySelector('div.main div.head div.menu span.badge img[title="非公開ユーザーです"]')){
+            users[i].style.display = 'none';
+        }
+
         const screenName = getScreenName(users[i]);
 
-        let toUserPage = document.createElement('a');
-        toUserPage.className = 'to-user-page';
-        toUserPage.innerHTML = getUserPage(screenName);
-        toUserPage.setAttribute('target', '_blank');
-        toUserPage.setAttribute('href', getUserPage(screenName));
-        users[i].appendChild(toUserPage);
+        createToUserPage(users[i], screenName);
 
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
@@ -28,6 +22,9 @@ window.addEventListener('load', event => {
 
         (async function () {
             let sc = await getStatuesCount(screenName);
+            if(Number(sc.split('回')[0]) < 1000){
+            users[i].style.display = 'none';
+            }
             let scEle = document.createElement('div');
             scEle.className = 'status-count';
             scEle.innerHTML = sc;
@@ -43,14 +40,13 @@ const observer = new MutationObserver(mutations => {
                 if (hasClass(node, 'users')) {
                     let users = node.children;
                     for (let i = 0; i < users.length; i++) {
+                        if(users[i].querySelector('div.main div.head div.menu span.badge img[title="非公開ユーザーです"]')){
+                            users[i].style.display = 'none';
+                        }
+
                         const screenName = getScreenName(users[i]);
 
-                        let toUserPage = document.createElement('a');
-                        toUserPage.className = 'to-user-page';
-                        toUserPage.innerHTML = getUserPage(screenName);
-                        toUserPage.setAttribute('target', '_blank');
-                        toUserPage.setAttribute('href', getUserPage(screenName));
-                        users[i].appendChild(toUserPage);
+                        createToUserPage(users[i], screenName);
 
                         let checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
@@ -59,6 +55,9 @@ const observer = new MutationObserver(mutations => {
 
                         (async function () {
                             let sc = await getStatuesCount(screenName);
+                            if(Number(sc.split('回')[0]) < 1000){
+                                users[i].style.display = 'none';
+                            }
                             let scEle = document.createElement('div');
                             scEle.className = 'status-count';
                             scEle.innerHTML = sc;
@@ -132,4 +131,22 @@ function getStatuesCount(screenName) {
 
 function getUserPage(screenName) {
     return `https://twitter.com/${screenName}`;
+}
+
+function createCounter(){
+    let counter = document.createElement('p');
+    counter.className = 'count';
+    counter.innerHTML = 0;
+    counter.style.position = 'fixed';
+    counter.style.zIndex = 10;
+    document.querySelector('body').insertBefore(counter, document.querySelector('body').firstChild)
+}
+
+function createToUserPage(user, screenName = ''){
+    let toUserPage = document.createElement('a');
+    toUserPage.className = 'to-user-page';
+    toUserPage.innerHTML = getUserPage(screenName);
+    toUserPage.setAttribute('target', '_blank');
+    toUserPage.setAttribute('href', getUserPage(screenName));
+    user.appendChild(toUserPage);
 }
