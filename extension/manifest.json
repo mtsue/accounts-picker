@@ -5,6 +5,10 @@
     "permissions": [
         "declarativeContent"
     ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
     "page_action": {
         "default_title": "Accounts Picker",
         "default_popup": "page_action/popup.html"
