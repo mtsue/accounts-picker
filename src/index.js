@@ -18,6 +18,8 @@ window.addEventListener('load', event => {
         let checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'checkbox';
+        checkbox.style.width = '50px';
+        checkbox.style.height = '50px';
         users[i].appendChild(checkbox);
 
         (async function () {
@@ -51,6 +53,8 @@ const observer = new MutationObserver(mutations => {
                         let checkbox = document.createElement('input');
                         checkbox.type = 'checkbox';
                         checkbox.className = 'checkbox';
+                        checkbox.style.width = '50px';
+                        checkbox.style.height = '50px';                
                         users[i].appendChild(checkbox);
 
                         (async function () {
